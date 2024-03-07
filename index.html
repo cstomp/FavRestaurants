@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Restaurants</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        #restaurantInput {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        #restaurantList {
+            list-style-type: none;
+            padding: 0;
+        }
+        #restaurantList li {
+            margin-bottom: 5px;
+        }
+        #restaurantList li button {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Favorite Restaurants</h1>
+    <input type="text" id="restaurantInput" placeholder="Enter a restaurant name">
+    <button onclick="addRestaurant()">Add Restaurant</button>
+
+    <h2>My Favorite Restaurants</h2>
+    <ul id="restaurantList"></ul>
+
+    <script>
+    // Function to add a restaurant to the list
+    function addRestaurant() {
+        var input = document.getElementById("restaurantInput").value;
+        if (input.trim() === "") {
+            alert("Please enter a restaurant name.");
+            return;
+        }
+        var list = document.getElementById("restaurantList");
+        var listItem = document.createElement("li");
+        list.appendChild(listItem);
+        saveRestaurants(input); // Save only the restaurant name
+        listItem.innerHTML = input + ' <button onclick="removeRestaurant(this)">Remove</button>';
+        document.getElementById("restaurantInput").value = "";
+    }
+
+    // Function to remove a restaurant from the list
+    function removeRestaurant(item) {
+        item.parentElement.remove();
+        saveRestaurants(); // Remove the restaurant from local storage
+    }
+
+    // Function to save the list of restaurants to local storage
+    function saveRestaurants(restaurant) {
+        var restaurants = JSON.parse(localStorage.getItem("favoriteRestaurants")) || [];
+        if (restaurant) {
+            restaurants.push(restaurant);
+        }
+        localStorage.setItem("favoriteRestaurants", JSON.stringify(restaurants));
+    }
+
+    // Function to load the list of restaurants from local storage
+    function loadRestaurants() {
+        var restaurants = JSON.parse(localStorage.getItem("favoriteRestaurants"));
+        if (restaurants) {
+            var list = document.getElementById("restaurantList");
+            restaurants.forEach(function(restaurant) {
+            var listItem = document.createElement("li");
+            listItem.innerHTML = restaurant + ' <button onclick="removeRestaurant(this)">Remove</button>';
+            list.appendChild(listItem);
+        });
+    }
+}
+
+        // Load restaurants when the page is loaded
+        window.onload = loadRestaurants;
+    </script>
+</body>
+</html>

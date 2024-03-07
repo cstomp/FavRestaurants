@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+h1, h2 {
+    text-align: center;
+}
+#restaurantInput {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+#restaurantList {
+    list-style-type: none;
+    padding: 0;
+}
+#restaurantList li {
+    margin-bottom: 5px;
+}
+#restaurantList li button {
+    margin-left: 5px;
+}
+
